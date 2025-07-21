@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 
 import { usePokemonList } from '@/hooks/usePokemon'
 import { usePokemonBatch } from '@/hooks/usePokemon'
@@ -13,9 +13,9 @@ import { Pokemon } from '@/types/pokemon'
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedType, setSelectedType] = useState('')
-
+  const [isInitialLoad, setIsInitialLoad] = useState(true)
+  
   const { data: pokemonListData, isLoading: listLoading, error: listError } = usePokemonList(151)
-
   const pokemonQueries = usePokemonBatch(pokemonListData?.results || [])
 
   const pokemons = useMemo(() => {
@@ -33,8 +33,18 @@ export default function Home() {
     })
   }, [pokemons, searchTerm, selectedType])
 
-  const isLoading = listLoading || pokemonQueries.some(query => query.isLoading)
+  const isLoadingQueries = listLoading || pokemonQueries.some(query => query.isLoading)
   const isError = listError || pokemonQueries.some(query => query.isError)
+  
+  const hasPokemonData = pokemons.length > 0
+
+  useEffect(() => {
+    if (hasPokemonData || isError) {
+      setIsInitialLoad(false)
+    }
+  }, [hasPokemonData, isError])
+  
+  const isLoading = isInitialLoad || (isLoadingQueries && !hasPokemonData)
 
   const availableTypes = useMemo(() => {
     const types = new Set<string>()

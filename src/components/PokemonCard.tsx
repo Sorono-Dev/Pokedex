@@ -28,7 +28,7 @@ export default function PokemonCard({ pokemon }: { pokemon: Pokemon }) {
               width={128}
               height={128}
               className={`w-32 h-32 object-contain transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
-              style={{ width: 'auto', height: 'auto' }}
+              style={{ width: 'auto', height: 'auto', margin: '0 auto' }}
               onLoad={() => setImageLoaded(true)}
             />
             {!imageLoaded && (

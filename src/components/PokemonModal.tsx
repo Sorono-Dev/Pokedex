@@ -23,7 +23,7 @@ export default function PokemonModal({ pokemon, isOpen, onClose }: { pokemon: Po
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 text-black">
       <div className="bg-white rounded-lg max-w-md w-full max-h-[90vh] overflow-y-auto">
         <div className={`${cardBgColor} p-6 rounded-t-lg`}>
           <div className="flex justify-between items-start mb-4">
@@ -37,7 +37,7 @@ export default function PokemonModal({ pokemon, isOpen, onClose }: { pokemon: Po
             </div>
             <button
               onClick={onClose}
-              className="text-white hover:text-gray-200 text-2xl"
+              className="text-white hover:text-gray-600 text-2xl"
             >
               ×
             </button>
@@ -67,7 +67,6 @@ export default function PokemonModal({ pokemon, isOpen, onClose }: { pokemon: Po
         </div>
 
         <div className="p-6">
-          {/* Description */}
           {getDescription() && (
             <div className="mb-6">
               <h3 className="text-lg font-bold mb-2">Description</h3>
@@ -96,7 +95,7 @@ export default function PokemonModal({ pokemon, isOpen, onClose }: { pokemon: Po
                   <span className="text-sm capitalize">{stat.stat.name}</span>
                   <span className="text-sm font-bold">{stat.base_stat}</span>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
+                <div className="w-full bg-gray-600 rounded-full h-2">
                   <div
                     className={`${cardBgColor} h-2 rounded-full transition-all duration-300`}
                     style={{ width: `${Math.min(stat.base_stat, 100)}%` }}
