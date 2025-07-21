@@ -23,8 +23,8 @@ export default function QueryProvider({ children }: { children: React.ReactNode 
   const [queryClient] = useState(() => new QueryClient({
     defaultOptions: {
       queries: {
-        staleTime: 60 * 60 * 1000,
-        gcTime: 24 * 60 * 60 * 1000,
+        staleTime: 60 * 60 * 1000, // fraish data 1h
+        gcTime: 24 * 60 * 60 * 1000, // garbage collection time 24h
         retry: 3,
         retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
         
@@ -40,9 +40,9 @@ export default function QueryProvider({ children }: { children: React.ReactNode 
       client={queryClient}
       persistOptions={{
         persister: indexedDBPersister,
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-        buster: 'pokemon-v1.0',
-        dehydrateOptions: {
+        maxAge: 7 * 24 * 60 * 60 * 1000, // data concerved 7 days in indexedDB
+        buster: 'pokemon-v1.0', // cache version
+        dehydrateOptions: { // only keep successfull queries to avoid corrupted data
           shouldDehydrateQuery: (query) => {
             return query.state.status === 'success' && 
                    query.queryKey[0] === 'pokemon'
